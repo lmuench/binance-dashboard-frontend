@@ -8,7 +8,8 @@ class App extends Component {
     super()
     this.state = {
       btcPairs: [],
-      btcUsdt: {}
+      btcUsdt: {},
+      filter: []
     }
     this.fetchBtcPairs()
     window.setInterval(this.fetchBtcPairs, 1000)
@@ -32,18 +33,32 @@ class App extends Component {
     })
   }
 
+  handleFilterChange = e => {
+    this.setState({
+      filter: e.target.value.toUpperCase().split(' ')
+    })
+  }
+
   render() {
     return (
-      <div className="App">
-        <div style={{ textAlign: 'center' }}>
+      <div className="App" style={{ textAlign: 'center' }}>
+        <div>
           <Cube
             change={this.state.btcUsdt.change}
             usdt={this.state.btcUsdt.price}
           />
         </div>
+        <input 
+          type="text"
+          size="40"
+          value={this.state.filter.value}
+          onChange={this.handleFilterChange}
+          placeholder=" enter symbols (e.g. ETH NANO NEO)"
+        />
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           {
             this.state.btcPairs
+            .filter(coin => this.state.filter.some(symbol => symbol === coin.symbol.slice(0, -3)))
             .sort((a, b) => a.symbol.localeCompare(b.symbol))
             .map(coin => 
               <Cube
