@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import logo from './logo.svg'
 import './App.css'
 import Cube from './Cube.js'
+import queryString from 'query-string'
 
 class App extends Component {
   constructor(props) {
@@ -58,9 +59,13 @@ class App extends Component {
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
           {
             this.state.btcPairs
-            .filter(coin => this.state.filter.some(symbol => symbol === coin.symbol.slice(0, -3)))
+            .filter(coin => 
+              this.state.filter
+              .concat(queryString.parse(window.location.search).symbol.toUpperCase().split('-'))
+              .some(symbol => symbol === coin.symbol.slice(0, -3))
+            )
             .sort((a, b) => a.symbol.localeCompare(b.symbol))
-            .map(coin => 
+            .map(coin =>
               <Cube
                 key={coin.symbol}
                 symbol={coin.symbol.slice(0, -3)}
