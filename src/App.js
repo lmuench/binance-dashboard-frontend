@@ -55,7 +55,7 @@ class App extends Component {
           onChange={this.handleFilterChange}
           placeholder=" enter symbols (e.g. ETH NANO NEO)"
         />
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
           {
             this.state.btcPairs
             .filter(coin => this.state.filter.some(symbol => symbol === coin.symbol.slice(0, -3)))
