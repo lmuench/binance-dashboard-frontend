@@ -7,12 +7,10 @@ class App extends Component {
   constructor(props) {
     super()
     this.state = {
-      btcPairs: [],
-      btcUsdt: {},
+      pairType: 'BTC',  // TODO: USDT currently not working
       filter: []
     }
-    this.fetchBtcPairs()
-    this.fetchBtcUsdt()
+    this.fetchPairs()
     this.setUpdateInterval()
   }
 
@@ -23,8 +21,7 @@ class App extends Component {
   }
 
   fetchAllCyclicData = () => {
-    this.fetchBtcPairs()
-    this.fetchBtcUsdt()
+    this.fetchPairs()
   }
 
   fetchUpdateInterval = async () => {
@@ -33,19 +30,11 @@ class App extends Component {
     return json.milliseconds
   }
 
-  fetchBtcPairs = async () => {
-    const res = await fetch('http://localhost:5000/btcpairs')
+  fetchPairs = async () => {
+    const res = await fetch('http://localhost:5000/tradingpairs')
     const json = await res.json()
     this.setState({
-      btcPairs: json
-    })
-  }
-
-  fetchBtcUsdt = async () => {
-    const res = await fetch('http://localhost:5000/btcusdt')
-    const json = await res.json()
-    this.setState({
-      btcUsdt: json
+      pairs: json
     })
   }
 
@@ -60,8 +49,9 @@ class App extends Component {
       <div className="App" style={{ textAlign: 'center' }}>
         <div>
           <Cube
-            change={this.state.btcUsdt.change}
-            usdt={this.state.btcUsdt.price}
+            symbol={this.state.pairType}
+            change={this.state.pairs && this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).change}
+            usdt={this.state.pairs && this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).price}
           />
         </div>
         <input 
@@ -73,17 +63,18 @@ class App extends Component {
         />
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
           {
-            this.state.btcPairs
+            this.state.pairs &&
+            this.state.pairs[this.state.pairType.toLowerCase()]
             .filter(coin => 
               this.state.filter
-                .concat(window.location.search && queryString.parse(window.location.search).symbol.toUpperCase().split('-'))
-              .some(symbol => symbol === coin.symbol.slice(0, -3))
+              .concat(window.location.search && queryString.parse(window.location.search).symbol.toUpperCase().split('-'))
+              .some(symbol => symbol === coin.symbol.slice(0, -this.state.pairType.length))
             )
             .sort((a, b) => a.symbol.localeCompare(b.symbol))
             .map(coin =>
               <Cube
                 key={coin.symbol}
-                symbol={coin.symbol.slice(0, -3)}
+                symbol={coin.symbol.slice(0, -this.state.pairType.length)}
                 price={coin.price}
                 change={coin.change}
                 usdt={coin.usdt}

@@ -34,7 +34,7 @@ class Cube extends Component {
     return (
       <div style={this.state}>
         <div style={{ color: '#EEE' }}>{this.props.symbol}</div>
-        <div>&#x20BF;{this.props.price && this.props.price.substring(0, 10)}</div>
+        <div>{this.props.price && this.props.price.substring(0, 10)}</div>
         <div>${this.props.usdt && this.props.usdt.substring(0, 10)}</div>
       </div>
     );
