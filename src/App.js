@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import logo from './logo.svg'
 import './App.css'
 import Cube from './Cube.js'
 import queryString from 'query-string'
@@ -18,7 +17,8 @@ class App extends Component {
   }
 
   setUpdateInterval = async () => {
-    const updateInterval = await this.fetchUpdateInterval()
+    let updateInterval = await this.fetchUpdateInterval()
+    if (updateInterval < 1000) updateInterval = 1000
     window.setInterval(this.fetchAllCyclicData, updateInterval)
   }
 
@@ -30,7 +30,7 @@ class App extends Component {
   fetchUpdateInterval = async () => {
     const res = await fetch('http://localhost:5000/updateinterval')
     const json = await res.json()
-    return json.miliseconds
+    return json.milliseconds
   }
 
   fetchBtcPairs = async () => {
