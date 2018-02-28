@@ -77,6 +77,7 @@ class App extends Component {
           symbol={this.state.pairType}
           change={this.state.pairs && this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).change}
           usdt={this.state.pairs && this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).price}
+          usdtHourlyChange={this.state.pairs && this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).usdtHourlyChange}
         />
 
         <input 
@@ -104,6 +105,8 @@ class App extends Component {
                 price={coin.price}
                 change={coin.change}
                 usdt={coin.usdt}
+                priceHourlyChange={coin.priceHourlyChange}
+                usdtHourlyChange={coin.usdtHourlyChange}
               />
             )
           }
