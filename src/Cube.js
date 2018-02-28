@@ -18,9 +18,7 @@ class Cube extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.change !== this.props.change) {
-      this.changeColor(nextProps.change)
-    }
+    this.changeColor(nextProps.change)
   }
 
   changeColor = change => {
@@ -28,6 +26,8 @@ class Cube extends Component {
       this.setState({ color: '#7fcc25' })
     } else if (change === -1) {
       this.setState({ color: '#ff0683' })
+    } else {
+      this.setState({ color: '#EEE' })
     }
   }
 
