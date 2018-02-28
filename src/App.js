@@ -111,6 +111,15 @@ class App extends Component {
             )
           }
         </div>
+        
+        <div style={{
+          color: '#777',
+          margin: '11px',
+          fontWeight: 'bold',
+          fontSize: '66%'
+        }}>
+          % = hourly change
+        </div>
       </div>
     )
   }
