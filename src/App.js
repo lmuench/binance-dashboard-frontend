@@ -13,9 +13,24 @@ class App extends Component {
       filter: []
     }
     this.fetchBtcPairs()
-    window.setInterval(this.fetchBtcPairs, 1000)
     this.fetchBtcUsdt()
-    window.setInterval(this.fetchBtcUsdt, 1000)
+    this.setUpdateInterval()
+  }
+
+  setUpdateInterval = async () => {
+    const updateInterval = await this.fetchUpdateInterval()
+    window.setInterval(this.fetchAllCyclicData, updateInterval)
+  }
+
+  fetchAllCyclicData = async () => {
+    this.fetchBtcPairs()
+    this.fetchBtcUsdt()
+  }
+
+  fetchUpdateInterval = async () => {
+    const res = await fetch('http://localhost:5000/updateinterval')
+    const json = await res.json()
+    return json.miliseconds
   }
 
   fetchBtcPairs = async () => {
