@@ -61,7 +61,7 @@ class App extends Component {
             this.state.btcPairs
             .filter(coin => 
               this.state.filter
-              .concat(queryString.parse(window.location.search).symbol.toUpperCase().split('-'))
+                .concat(window.location.search && queryString.parse(window.location.search).symbol.toUpperCase().split('-'))
               .some(symbol => symbol === coin.symbol.slice(0, -3))
             )
             .sort((a, b) => a.symbol.localeCompare(b.symbol))
