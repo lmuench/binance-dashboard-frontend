@@ -44,16 +44,41 @@ class App extends Component {
     })
   }
 
+  handlePairTypeChange = e => {
+    this.setState({
+      pairType: e.target.value
+    })
+  }
+
   render() {
     return (
       <div className="App" style={{ textAlign: 'center' }}>
-        <div>
-          <Cube
-            symbol={this.state.pairType}
-            change={this.state.pairs && this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).change}
-            usdt={this.state.pairs && this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).price}
-          />
-        </div>
+        <form style={{ 
+          color: '#888',
+          margin: '10px',
+          fontWeight: 'bold',
+          fontSize: '83%'
+        }}>
+          <label>
+            <input type="radio" value="BTC" checked={this.state.pairType === 'BTC'} onChange={this.handlePairTypeChange} />
+            BTC
+          </label>
+          <label>
+            <input type="radio" value="ETH" checked={this.state.pairType === 'ETH'} onChange={this.handlePairTypeChange} />
+            ETH
+          </label>
+          <label>
+            <input type="radio" value="BNB" checked={this.state.pairType === 'BNB'} onChange={this.handlePairTypeChange} />
+            BNB
+          </label>
+        </form>
+
+        <Cube
+          symbol={this.state.pairType}
+          change={this.state.pairs && this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).change}
+          usdt={this.state.pairs && this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).price}
+        />
+
         <input 
           type="text"
           size="40"
@@ -61,6 +86,7 @@ class App extends Component {
           onChange={this.handleFilterChange}
           placeholder=" enter symbols (e.g. ETH NANO NEO)"
         />
+
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
           {
             this.state.pairs &&
