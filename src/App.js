@@ -22,7 +22,7 @@ class App extends Component {
     window.setInterval(this.fetchAllCyclicData, updateInterval)
   }
 
-  fetchAllCyclicData = async () => {
+  fetchAllCyclicData = () => {
     this.fetchBtcPairs()
     this.fetchBtcUsdt()
   }
