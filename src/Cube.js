@@ -26,7 +26,7 @@ class Cube extends Component {
     } else if (change === -1) {
       this.setState({ color: '#ff0683' })
     } else {
-      this.setState({ color: '#EEE' })
+      this.setState({ color: '#BBB' })
     }
   }
 
@@ -34,8 +34,8 @@ class Cube extends Component {
     return (
       <div style={this.state}>
         <div style={{ color: '#EEE' }}>{this.props.symbol}</div>
-        <div>{this.props.price && this.props.price.substring(0, 10)}</div>
-        <div>${this.props.usdt && this.props.usdt.substring(0, 10)}</div>
+        <div>{this.props.price}</div>
+        <div style={{ color: '#EEE' }}>${this.props.usdt}</div>
       </div>
     );
   }

@@ -84,7 +84,7 @@ class App extends Component {
           size="40"
           value={this.state.filter.value}
           onChange={this.handleFilterChange}
-          placeholder=" enter symbols (e.g. ETH NANO NEO)"
+          placeholder=" enter symbols (e.g. 'NANO NEO VEN')"
         />
 
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
