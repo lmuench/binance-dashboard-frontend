@@ -76,7 +76,7 @@ class App extends Component {
         <Cube
           symbol={this.state.pairType}
           change={this.state.pairs && this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).change}
-          usdt={this.state.pairs && this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).price}
+          usdt={this.state.pairs && Number(this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).price).toFixed(2)}
           usdtHourlyChange={this.state.pairs && this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).usdtHourlyChange}
         />
 
