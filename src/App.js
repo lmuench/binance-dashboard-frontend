@@ -3,40 +3,22 @@ import Cube from './Cube.js'
 import queryString from 'query-string'
 
 class CurrencySelector extends Component {
-  constructor(props) {
-    super()
-  }
-
   render() {
     return (
       <form style={{ color: '#888' }}>
-        <label>
-          <input
-            type="radio"
-            value="BTC"
-            checked={this.props.pairType === 'BTC'}
-            onChange={this.props.onChange}
-          />
-          BTC
-          </label>
-        <label>
-          <input
-            type="radio"
-            value="ETH"
-            checked={this.props.pairType === 'ETH'}
-            onChange={this.props.onChange}
-          />
-          ETH
-          </label>
-        <label>
-          <input
-            type="radio"
-            value="BNB"
-            checked={this.props.pairType === 'BNB'}
-            onChange={this.props.onChange}
-          />
-          BNB
-          </label>
+        {this.props.values.map(value => {
+          return (
+            <label key={value}>
+              <input
+                type="radio"
+                value={value}
+                checked={this.props.checkedIfEquals === value}
+                onChange={this.props.onChange}
+              />
+              {value}
+            </label>
+          )
+        })}
       </form>
     )
   }
@@ -98,7 +80,8 @@ class App extends Component {
         fontSize: '83%'
       }}>
         <CurrencySelector
-          pairType={this.state.pairType}
+          values={['BTC', 'ETH', 'BNB']}
+          checkedIfEquals={this.state.pairType}
           onChange={this.handlePairTypeChange}
         />
         <Cube
