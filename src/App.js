@@ -1,28 +1,7 @@
 import React, { Component } from 'react'
 import Cube from './Cube.js'
 import queryString from 'query-string'
-
-class CurrencySelector extends Component {
-  render() {
-    return (
-      <form style={{ color: '#888' }}>
-        {this.props.values.map(value => {
-          return (
-            <label key={value}>
-              <input
-                type="radio"
-                value={value}
-                checked={this.props.checkedIfEquals === value}
-                onChange={this.props.onChange}
-              />
-              {value}
-            </label>
-          )
-        })}
-      </form>
-    )
-  }
-}
+import RadioButtons from './RadioButtons.js'
 
 class App extends Component {
   constructor(props) {
@@ -79,7 +58,7 @@ class App extends Component {
         fontWeight: 'bold',
         fontSize: '83%'
       }}>
-        <CurrencySelector
+        <RadioButtons
           values={['BTC', 'ETH', 'BNB']}
           checkedIfEquals={this.state.pairType}
           onChange={this.handlePairTypeChange}
