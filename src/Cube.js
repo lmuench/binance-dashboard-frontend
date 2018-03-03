@@ -4,8 +4,7 @@ class Cube extends Component {
   constructor(props) {
     super()
     this.state = {
-      margin: '10px',
-      color: '#EEE'
+      priceColor: '#EEE'
     }
   }
 
@@ -19,33 +18,33 @@ class Cube extends Component {
 
   changeColor = change => {
     if (change === 1) {
-      this.setState({ color: '#7fcc25' })
+      this.setState({ priceColor: '#7fcc25' })
     } else if (change === -1) {
-      this.setState({ color: '#ff0683' })
+      this.setState({ priceColor: '#ff0683' })
     } else {
-      this.setState({ color: '#BBB' })
+      this.setState({ priceColor: '#BBB' })
     }
   }
 
   render() {
+    const priceChange = this.props.priceHourlyChange
+    const usdtChange = this.props.usdtHourlyChange
     return (
-      <div style={this.state}>
+      <div style={{ margin: '10px' }}>
         <div style={{ color: '#EEE' }}>
           {this.props.symbol}
         </div>
         <div style={{ color: '#777' }}>
-          {this.props.priceHourlyChange > 0 && '+'}
-          {this.props.priceHourlyChange}
-          {this.props.priceHourlyChange && ' %'}
+          {priceChange > 0 && '+'}{priceChange}{priceChange && ' %'}
         </div>
-        <div>{this.props.price}</div>
+        <div style={{ color: this.state.priceColor }}>
+          {this.props.price}
+        </div>
         <div style={{ color: '#EEE' }}>
           ${this.props.usdt}
         </div>
         <div style={{ color: '#777' }}>
-          {this.props.usdtHourlyChange > 0 && '+'}
-          {this.props.usdtHourlyChange}
-          {this.props.usdtHourlyChange && ' %'}
+          {usdtChange > 0 && '+'}{usdtChange}{usdtChange && ' %'}
         </div>
       </div>
     );
