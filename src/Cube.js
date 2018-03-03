@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
 
 class Cube extends Component {
   constructor(props) {
     super()
     this.state = {
       margin: '10px',
-      fontWeight: 'bold',
-      fontSize: '83%',
       color: '#EEE'
     }
   }
@@ -33,11 +30,23 @@ class Cube extends Component {
   render() {
     return (
       <div style={this.state}>
-        <div style={{ color: '#EEE' }}>{this.props.symbol}</div>
-        <div style={{ color: '#777' }}>{this.props.priceHourlyChange > 0 && '+'}{this.props.priceHourlyChange}{this.props.priceHourlyChange && ' %'}</div>
+        <div style={{ color: '#EEE' }}>
+          {this.props.symbol}
+        </div>
+        <div style={{ color: '#777' }}>
+          {this.props.priceHourlyChange > 0 && '+'}
+          {this.props.priceHourlyChange}
+          {this.props.priceHourlyChange && ' %'}
+        </div>
         <div>{this.props.price}</div>
-        <div style={{ color: '#EEE' }}>${this.props.usdt}</div>
-        <div style={{ color: '#777' }}>{this.props.usdtHourlyChange > 0 && '+'}{this.props.usdtHourlyChange}{this.props.usdtHourlyChange && ' %'}</div>
+        <div style={{ color: '#EEE' }}>
+          ${this.props.usdt}
+        </div>
+        <div style={{ color: '#777' }}>
+          {this.props.usdtHourlyChange > 0 && '+'}
+          {this.props.usdtHourlyChange}
+          {this.props.usdtHourlyChange && ' %'}
+        </div>
       </div>
     );
   }

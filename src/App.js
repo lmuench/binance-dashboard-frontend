@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import './App.css'
 import Cube from './Cube.js'
 import queryString from 'query-string'
 
@@ -7,7 +6,7 @@ class App extends Component {
   constructor(props) {
     super()
     this.state = {
-      pairType: 'BTC',  // TODO: USDT currently not working
+      pairType: 'BTC',
       filter: []
     }
     this.fetchPairs()
@@ -52,32 +51,65 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App" style={{ textAlign: 'center' }}>
-        <form style={{ 
-          color: '#888',
-          margin: '10px',
-          fontWeight: 'bold',
-          fontSize: '83%'
-        }}>
+      <div className="App" style={{
+        textAlign: 'center',
+        margin: '10px',
+        fontWeight: 'bold',
+        fontSize: '83%'
+      }}>
+        <form style={{ color: '#888' }}>
           <label>
-            <input type="radio" value="BTC" checked={this.state.pairType === 'BTC'} onChange={this.handlePairTypeChange} />
+            <input
+              type="radio"
+              value="BTC"
+              checked={this.state.pairType === 'BTC'}
+              onChange={this.handlePairTypeChange}
+            />
             BTC
           </label>
           <label>
-            <input type="radio" value="ETH" checked={this.state.pairType === 'ETH'} onChange={this.handlePairTypeChange} />
+            <input
+              type="radio"
+              value="ETH"
+              checked={this.state.pairType === 'ETH'}
+              onChange={this.handlePairTypeChange}
+            />
             ETH
           </label>
           <label>
-            <input type="radio" value="BNB" checked={this.state.pairType === 'BNB'} onChange={this.handlePairTypeChange} />
+            <input
+              type="radio"
+              value="BNB"
+              checked={this.state.pairType === 'BNB'}
+              onChange={this.handlePairTypeChange}
+            />
             BNB
           </label>
         </form>
 
         <Cube
           symbol={this.state.pairType}
-          change={this.state.pairs && this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).change}
-          usdt={this.state.pairs && Number(this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).price).toFixed(2)}
-          usdtHourlyChange={this.state.pairs && this.state.pairs.usdt.find(coin => coin.symbol.startsWith(this.state.pairType)).usdtHourlyChange}
+          change={
+            this.state.pairs &&
+            this.state.pairs.usdt
+            .find(coin => coin.symbol.startsWith(this.state.pairType))
+            .change
+          }
+          usdt={
+            this.state.pairs &&
+            Number(
+              this.state.pairs.usdt
+              .find(coin => coin.symbol.startsWith(this.state.pairType))
+              .price
+            )
+            .toFixed(2)
+          }
+          usdtHourlyChange={
+            this.state.pairs &&
+            this.state.pairs.usdt
+            .find(coin => coin.symbol.startsWith(this.state.pairType))
+            .usdtHourlyChange
+          }
         />
 
         <input 
@@ -88,14 +120,25 @@ class App extends Component {
           placeholder=" enter symbols (e.g. 'NANO NEO VEN')"
         />
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <div style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center'
+        }}>
           {
             this.state.pairs &&
             this.state.pairs[this.state.pairType.toLowerCase()]
             .filter(coin => 
               this.state.filter
-              .concat(window.location.search && queryString.parse(window.location.search).symbol.toUpperCase().split('-'))
-              .some(symbol => symbol === coin.symbol.slice(0, -this.state.pairType.length))
+              .concat(
+                window.location.search &&
+                queryString.parse(window.location.search).symbol
+                .toUpperCase()
+                .split('-')
+              )
+              .some(
+                symbol => symbol === coin.symbol.slice(0, -this.state.pairType.length)
+              )
             )
             .sort((a, b) => a.symbol.localeCompare(b.symbol))
             .map(coin =>
@@ -115,8 +158,7 @@ class App extends Component {
         <div style={{
           color: '#777',
           margin: '11px',
-          fontWeight: 'bold',
-          fontSize: '66%'
+          fontSize: '80%'
         }}>
           % = hourly change
         </div>
