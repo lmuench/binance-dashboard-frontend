@@ -2,6 +2,46 @@ import React, { Component } from 'react'
 import Cube from './Cube.js'
 import queryString from 'query-string'
 
+class CurrencySelector extends Component {
+  constructor(props) {
+    super()
+  }
+
+  render() {
+    return (
+      <form style={{ color: '#888' }}>
+        <label>
+          <input
+            type="radio"
+            value="BTC"
+            checked={this.props.pairType === 'BTC'}
+            onChange={this.props.onChange}
+          />
+          BTC
+          </label>
+        <label>
+          <input
+            type="radio"
+            value="ETH"
+            checked={this.props.pairType === 'ETH'}
+            onChange={this.props.onChange}
+          />
+          ETH
+          </label>
+        <label>
+          <input
+            type="radio"
+            value="BNB"
+            checked={this.props.pairType === 'BNB'}
+            onChange={this.props.onChange}
+          />
+          BNB
+          </label>
+      </form>
+    )
+  }
+}
+
 class App extends Component {
   constructor(props) {
     super()
@@ -57,36 +97,10 @@ class App extends Component {
         fontWeight: 'bold',
         fontSize: '83%'
       }}>
-        <form style={{ color: '#888' }}>
-          <label>
-            <input
-              type="radio"
-              value="BTC"
-              checked={this.state.pairType === 'BTC'}
-              onChange={this.handlePairTypeChange}
-            />
-            BTC
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="ETH"
-              checked={this.state.pairType === 'ETH'}
-              onChange={this.handlePairTypeChange}
-            />
-            ETH
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="BNB"
-              checked={this.state.pairType === 'BNB'}
-              onChange={this.handlePairTypeChange}
-            />
-            BNB
-          </label>
-        </form>
-
+        <CurrencySelector
+          pairType={this.state.pairType}
+          onChange={this.handlePairTypeChange}
+        />
         <Cube
           symbol={this.state.pairType}
           change={
