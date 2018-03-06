@@ -41,7 +41,7 @@ class Cube extends Component {
           {this.props.price}
         </div>
         <div style={{ color: '#EEE' }}>
-          ${this.props.usdt}
+          {this.props.usdt && '$'}{this.props.usdt}
         </div>
         <div style={{ color: '#777' }}>
           {usdtChange > 0 && '+'}{usdtChange}{usdtChange && ' %'}

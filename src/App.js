@@ -73,7 +73,7 @@ class App extends Component {
     return (
       pairs.usdt
       .find(coin => coin.symbol.startsWith(symbol))
-      .usdtHourlyChange
+      .priceHourlyChange
     )
   }
 
@@ -120,8 +120,8 @@ class App extends Component {
         <Cube
           symbol={this.state.counterCurrency}
           change={this.extractChange(this.state.pairs, this.state.counterCurrency)}
-          usdt={this.extractUsdt(this.state.pairs, this.state.counterCurrency)}
-          usdtHourlyChange={this.extractUsdtHourlyChange(this.state.pairs, this.state.counterCurrency)}
+          price={'$' + this.extractUsdt(this.state.pairs, this.state.counterCurrency)}
+          priceHourlyChange={this.extractUsdtHourlyChange(this.state.pairs, this.state.counterCurrency)}
         />
 
         <input 
