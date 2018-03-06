@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
     super()
     this.state = {
-      pairType: 'BTC',
+      counterCurrency: 'BTC',
       filter: []
     }
     this.fetchPairs()
@@ -44,10 +44,37 @@ class App extends Component {
     })
   }
 
-  handlePairTypeChange = e => {
+  handleCounterCurrencyChange = e => {
     this.setState({
-      pairType: e.target.value
+      counterCurrency: e.target.value
     })
+  }
+
+  extractChange = (pairs, symbol) => {
+    if (!pairs) return null
+    return (
+      pairs.usdt
+      .find(coin => coin.symbol.startsWith(symbol))
+      .change
+    )
+  }
+
+  extractUsdt = (pairs, symbol) => {
+    if (!pairs) return null
+    return Number(
+      pairs.usdt
+      .find(coin => coin.symbol.startsWith(symbol))
+      .price
+    ).toFixed(2)
+  }
+
+  extractUsdtHourlyChange = (pairs, symbol) => {
+    if (!pairs) return null
+    return (
+      pairs.usdt
+      .find(coin => coin.symbol.startsWith(symbol))
+      .usdtHourlyChange
+    )
   }
 
   render() {
@@ -60,32 +87,14 @@ class App extends Component {
       }}>
         <RadioButtons
           values={['BTC', 'ETH', 'BNB']}
-          checkedIfEquals={this.state.pairType}
-          onChange={this.handlePairTypeChange}
+          checkedIfEquals={this.state.counterCurrency}
+          onChange={this.handleCounterCurrencyChange}
         />
         <Cube
-          symbol={this.state.pairType}
-          change={
-            this.state.pairs &&
-            this.state.pairs.usdt
-            .find(coin => coin.symbol.startsWith(this.state.pairType))
-            .change
-          }
-          usdt={
-            this.state.pairs &&
-            Number(
-              this.state.pairs.usdt
-              .find(coin => coin.symbol.startsWith(this.state.pairType))
-              .price
-            )
-            .toFixed(2)
-          }
-          usdtHourlyChange={
-            this.state.pairs &&
-            this.state.pairs.usdt
-            .find(coin => coin.symbol.startsWith(this.state.pairType))
-            .usdtHourlyChange
-          }
+          symbol={this.state.counterCurrency}
+          change={this.extractChange(this.state.pairs, this.state.counterCurrency)}
+          usdt={this.extractUsdt(this.state.pairs, this.state.counterCurrency)}
+          usdtHourlyChange={this.extractUsdtHourlyChange(this.state.pairs, this.state.counterCurrency)}
         />
 
         <input 
@@ -103,7 +112,7 @@ class App extends Component {
         }}>
           {
             this.state.pairs &&
-            this.state.pairs[this.state.pairType.toLowerCase()]
+            this.state.pairs[this.state.counterCurrency.toLowerCase()]
             .filter(coin => 
               this.state.filter
               .concat(
@@ -113,14 +122,14 @@ class App extends Component {
                 .split('-')
               )
               .some(
-                symbol => symbol === coin.symbol.slice(0, -this.state.pairType.length)
+                symbol => symbol === coin.symbol.slice(0, -this.state.counterCurrency.length)
               )
             )
             .sort((a, b) => a.symbol.localeCompare(b.symbol))
             .map(coin =>
               <Cube
                 key={coin.symbol}
-                symbol={coin.symbol.slice(0, -this.state.pairType.length)}
+                symbol={coin.symbol.slice(0, -this.state.counterCurrency.length)}
                 price={coin.price}
                 change={coin.change}
                 usdt={coin.usdt}
