@@ -77,6 +77,33 @@ class App extends Component {
     )
   }
 
+  filterOutChosenSymbols = pairs => {
+    if (!pairs) return []
+    let chosenSymbols = this.state.filter
+
+    if (window.location.search) {
+      const querySymbols = (
+        queryString.parse(window.location.search).symbol
+        .toUpperCase()
+        .split('-')
+      )
+      chosenSymbols = chosenSymbols.concat(querySymbols)
+    }
+
+    const checkIfCoinIsInChosenSymbols = coin => {
+      return chosenSymbols.some(
+        symbol => symbol === coin.symbol.slice(0, -this.state.counterCurrency.length)
+      )
+    }
+
+    const filteredOutCoins = (
+      this.state.pairs[this.state.counterCurrency.toLowerCase()]
+      .filter(coin => checkIfCoinIsInChosenSymbols(coin))
+    )
+
+    return filteredOutCoins
+  }
+
   render() {
     return (
       <div className="App" style={{
@@ -111,20 +138,7 @@ class App extends Component {
           justifyContent: 'center'
         }}>
           {
-            this.state.pairs &&
-            this.state.pairs[this.state.counterCurrency.toLowerCase()]
-            .filter(coin => 
-              this.state.filter
-              .concat(
-                window.location.search &&
-                queryString.parse(window.location.search).symbol
-                .toUpperCase()
-                .split('-')
-              )
-              .some(
-                symbol => symbol === coin.symbol.slice(0, -this.state.counterCurrency.length)
-              )
-            )
+            this.filterOutChosenSymbols(this.state.pairs)
             .sort((a, b) => a.symbol.localeCompare(b.symbol))
             .map(coin =>
               <Cube
